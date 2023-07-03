@@ -1,0 +1,291 @@
+﻿@model BusTripDetails
+<h1>
+    @Model.BusTripName
+</h1>
+<h4>
+    @Model.VehicleInfo
+</h4>
+
+<style>
+    .bus-seat {
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        margin: 0 15px 15px 0;
+        border: 1px solid #222;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .selected-seat {
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        margin: 0 15px 15px 0;
+        border: 1px solid #222;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: green
+    }
+
+    .active {
+        background-color: green
+    }
+
+    .occupied {
+        background-color: red;
+        pointer-events: none
+    }
+    }
+</style>
+
+<div class="row mt-3">
+    <div class="col-5 col-lg-5">
+        @for (int i = 0; i < Model.SeatCount; i += 4)
+        {
+            for (int seatNumber = i + 1; seatNumber <= i + 4; seatNumber++)
+            {
+                if (Model.SoldSeatNumbers.Contains(seatNumber))
+                {
+                    <div class="bus-seat occupied" data-seat-number="@seatNumber">@seatNumber</div>
+                }
+                else
+                {
+                    <div id="@seatNumber" class="bus-seat" data-seat-number="@seatNumber">@seatNumber</div>
+                }
+
+                if (seatNumber % 2 == 0 && seatNumber % 4 != 0)
+                {
+                    <div class="d-inline-block" style="width: 20px;"></div>
+                }
+            }
+            <br />
+        }
+    </div>
+    <div class="col-6 col-lg-7">
+
+        <form id="ticket_form">
+            <input type="hidden" name="BusTripId" value="@Model.BusTripId" />
+
+            <div class="mb-2">
+                <label class="form-label">Koltuk Numarası</label>
+                <input class="form-control" type="text" id="seat_number" name="SeatNumber" readonly />
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Yolcu Adı</label>
+                <input class="form-control" name="PassengerFirstName" type="text" />
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Yolcu Soyadı</label>
+                <input class="form-control" name="PassengerLastName" type="text" />
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">TC Kimlik</label>
+                <input class="form-control" name="PassengerIdentityNumber" type="number" />
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Ücret</label>
+                <input type="hidden" id="ticket_original_price" value="@Model.TicketPrice" />
+                <input class="form-control" type="number" name="Price" id="ticket_price" value="@Model.TicketPrice" readonly />
+                <label>
+                    <input type="checkbox" id="tam_bilet" />
+                    Tam Bilet
+                </label>
+
+                <label>
+                    <input type="checkbox" id="is_student_ticket" />
+                    Öğrenci Bileti
+                </label>
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-dark">
+                    Bileti Kaydet
+                </button>
+            </div>
+          
+
+
+
+            <section class="agency-bottom-content d-print-none" id="agency_bottom">
+                <div class="container">
+                    <div class="invo-buttons-wrap">
+                        <div class="invo-print-btn invo-btns">
+                            <a href="javascript:window.print()" class="print-btn">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_5_313)">
+                                        <path d="M14 3V7C14 7.26522 14.1054 7.51957 14.2929 7.70711C14.4804 7.89464 14.7348 8 15 8H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M17 21H7C6.46957 21 5.96086 20.7893 5.58579 20.4142C5.21071 20.0391 5 19.5304 5 19V5C5 4.46957 5.21071 3.96086 5.58579 3.58579C5.96086 3.21071 6.46957 3 7 3H14L19 8V19C19 19.5304 18.7893 20.0391 18.4142 20.4142C18.0391 20.7893 17.5304 21 17 21Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9 7H10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9 13H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M13 17H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_5_313">
+                                            <rect width="24" height="24" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                <span class="inter-700 medium-font">Bileti Yazdır</span>
+                            </a>
+                        </div>
+                       
+                    </div>
+              
+                </div>
+            </section>
+
+        </form>
+
+    </div>
+    
+</div>
+
+@section Scripts {
+    <script>
+
+            
+        var prevDiv = null
+        $('div.bus-seat').click(function (seat) {
+            
+            $(this).addClass('selected-seat')
+
+            if (prevDiv !== null) {
+                $(prevDiv).removeClass('selected-seat')
+
+            }
+            prevDiv = $(this)
+            console.log(prevDiv)
+            console.log(this.dataset.seatNumber);
+            
+
+            $('#seat_number').val(this.dataset.seatNumber);
+            
+
+        });
+        $('#tam_bilet').click(function () {
+
+            let ticketPrice = $('#ticket_price').val();
+            ticketPrice = parseFloat(ticketPrice);
+
+            let originalPrice = $('#ticket_original_price').val();
+            originalPrice = parseFloat(originalPrice);
+
+            if (this.checked) {
+                ticketPrice = originalPrice * 1;
+            }
+            else {
+                ticketPrice = originalPrice;
+            }
+
+            $('#ticket_price').val(ticketPrice.toFixed(2));
+
+            $('#is_student_ticket').prop('checked', false)
+
+            
+
+        });
+
+        $('#is_student_ticket').click(function () {
+
+            let ticketPrice = $('#ticket_price').val();
+            ticketPrice = parseFloat(ticketPrice);
+
+            let originalPrice = $('#ticket_original_price').val();
+            originalPrice = parseFloat(originalPrice);
+
+            if (this.checked) {
+                ticketPrice = originalPrice * 0.75;
+            }
+            else {
+                ticketPrice = originalPrice;
+            }
+
+            $('#ticket_price').val(ticketPrice.toFixed(2));
+            $('#tam_bilet').prop('checked', false)
+
+        });
+        
+       
+
+        function checkSeatStatus() {
+            $.ajax({
+                url: '@Url.Action("GetSeatStatus", "Ticket")',
+                method: 'get',
+                success: function (seatStatus) {
+
+                    seatStatus.forEach(function (seat) {
+                        console.log(seatStatus)
+                        if (seat.isOccupied) {
+                            $('.bus-seat[data-seat-number="' + seat.seatNumber + '"]').addClass('occupied');
+                        }
+                    });
+                }
+            });
+        }
+
+        $('div.bus-seat').click(function () {
+            var previousColor = null;
+            console.log(this.dataset.seatNumber);
+            $('div.bus-seat').removeClass('selected');
+            $(this).addClass('selected');
+
+            $('#seat_number').val(this.dataset.seatNumber);
+
+        });
+
+
+        $('#ticket_form').submit(function (e) {
+            e.preventDefault();
+
+            $('div.bus-seat').removeClass('selected');
+
+            $.ajax({
+                url: '@Url.Action("Create", "Ticket")',
+                method: 'post',
+                data: $(this).serialize(),
+                success: function (commandResult) {
+                    alert(commandResult.message);
+
+
+
+                    if (commandResult.success) {
+
+                        let seatNumber = $('#seat_number').val();
+                        $('.bus-seat[data-seat-number="' + seatNumber + '"]').addClass('occupied');
+                    }
+
+                }
+
+            });
+            $(document).ready(function () {
+                var previousColor = null;
+
+                $('.occupied').click(function () {
+                    var clickedColor = $(this).data('color');
+
+                    if (previousColor) {
+                        $('.occupied[data-color="' + previousColor + '"]').removeClass(previousColor);
+                    }
+
+                    $(this).addClass(clickedColor);
+                    previousColor = clickedColor;
+                    event.target.disabled = true;
+                });
+            });
+
+        });
+
+
+    </script>
+}

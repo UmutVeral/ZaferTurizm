@@ -1,0 +1,82 @@
+﻿@using ZaferTurizm.Dtos;
+
+@model IEnumerable<VehicleMakeDto>
+    <div class="marka">
+
+
+        <h1 class="text-center">
+            Markalar
+        </h1>
+
+        <div class="row">
+            <div class="col-3 col-sm-3 col-md-3">
+
+            </div>
+            <div class="col-6 col-sm-6 col-md-6">
+                <div>
+                    <a class="btn btn-primary float-end btn-small" asp-controller="VehicleMake" asp-action="Create">Yeni Marka Ekle</a>
+
+                </div>
+                <table class="table table-striped">
+
+                    <thead>
+                        <tr>
+                            <!-- tr >>> TABLE ROW -->
+                            <th>Id</th> <!-- th >>> TABLE HEADING -->
+                            <th>Marka Adı</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <!--
+                                dynamic tipi ile kodlama yapmaya DUCK TYPING
+                                Duck Typing tekniği ile View içerisinde kodlama yapmak biraz zor olabileceği için
+                                sayfanın yukarısında model tanımlaması yapmak daha iyidir
+                            -->
+
+                            <tr>
+                                <!-- td >>> TABLE DATA -->
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>
+                                    <a class="btn btn-link" href="/VehicleMake/Update/@item.Id">Düzenle</a>
+                                    @* <form method="post" action="/VehicleMake/Delete"> *@
+                                    <form method="post" asp-controller="VehicleMake" asp-action="Delete" class="d-inline">
+                                        <input type="hidden" name="Id" value="@item.Id">
+                                        <button class="btn btn-link">Sil</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-3 col-sm-3 col-md-3">
+
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>// document. yazdıktan sonra eriştiğimiz Property, Metot ve diğer üyeler DOM framework'ünün
+            // birer üyesidir
+            // DOM -> Document Object Model
+
+            let formElements = document.getElementsByTagName('form');
+
+            for (let i = 0; i < formElements.length; i++) {
+
+                formElements[i].addEventListener('submit', function (eventArgs) {
+
+                    let confirmed = confirm("Dikkat!! Bu kayıt silinecek, devam etmek istiyor musunuz?");
+
+                    if (!confirmed) {
+                        eventArgs.preventDefault();
+                    }
+                });
+
+            }</script>
+    }

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<VehicleDefinitionSummary>
+
+
+<div class="marka">
+
+    <h1>Araç Tanımları</h1>
+    <div class="row">
+        <div class="col-1 col-sm-1 col-md-1">
+
+        </div>
+        <div class="col-10 col-md-10">
+            <div class="text-end mb-2">
+                <a asp-controller="VehicleDefinition" asp-action="Create" class="btn btn-primary btn-sm">Yeni ekle</a>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Marka</th>
+                        <th>Model</th>
+                        <th>Yılı</th>
+                        <th>Koltuk Sayısı</th>
+                        <th>Lavabo</th>
+                        <th>Wifi</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var vehicleDefinition in Model)
+                    {
+                        <tr>
+                            <td>@vehicleDefinition.Id</td>
+                            <td>@vehicleDefinition.VehicleMakeName</td>
+                            <td>@vehicleDefinition.VehicleModelName</td>
+                            <td>@vehicleDefinition.Year</td>
+                            <td>@vehicleDefinition.SeatCount</td>
+                            <td>@vehicleDefinition.HasToiletString</td>
+                            <td>@vehicleDefinition.HasWifiString</td>
+                            <td>
+                                <a asp-controller="VehicleDefinition" asp-action="Update" asp-route-id="@vehicleDefinition.Id">Düzenle</a>
+                                <a href="#">Sil</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-1 col-sm-1 col-md-1">
+
+        </div>
+    </div>
+</div>

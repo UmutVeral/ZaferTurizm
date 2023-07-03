@@ -1,0 +1,85 @@
+﻿@model IEnumerable<TicketDto>
+
+
+<div class="bilet">
+
+    <h1 class="text-center">Satılan Biletler</h1>
+   <div class="container" style="width = 25%; ">
+        @using (Html.BeginForm())
+        {
+            @Html.TextBox("ara",null,new{@class="form-control",@placeholder="Ad ile yolcu araması"})
+            <input type="submit" name="buton" value="Ara" class="btn btn-primary"/>
+        }
+    </div>
+    <div class="row">
+        <div class="col-1 col-sm-1 col-md-1">
+
+        </div>
+        <div class="col-10 col-md-10">
+
+            @if (ViewBag.SuccessMessage != null)
+            {
+                <div class="alert alert-success" id="success_message">
+                    @ViewBag.SuccessMessage
+                </div>
+            }
+
+            <div class="text-end mb-2">
+                <a asp-controller="BusTrip" asp-action="Index" class="btn btn-primary btn-sm">Yeni Bilet Sat</a>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Sefer Id</th>
+                        <th>Koltuk No</th>
+                        <th>Yolcu Ad ve Soyad</th>
+                        <th>Fiyat</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var tickets in Model)
+                    {
+                        <tr>
+                            
+                            <td>@tickets.Id</td>
+                            <td>@tickets.BusTripId</td>
+                            <td>@tickets.SeatNumber</td>
+                            <td>@tickets.PassengerFirstName @tickets.PassengerLastName</td>
+                            
+                            <td>@tickets.Price</td>
+                            <td>
+                               
+                                <form method="post" asp-controller="Ticket" asp-action="Delete" class="d-inline">
+                                    <input type="hidden" name="Id" value="@tickets.Id">
+                                    <button class="btn btn-link">Bileti İptal Et</button>
+                                </form>
+                            </td>
+                        </tr>
+                       
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-1 col-sm-1 col-md-1">
+
+    </div>
+</div>
+@section Scripts{
+
+    <script>
+
+
+        let formElements = document.getElementsByTagName('form');
+
+        for (let i = 0; i < formElements.length; i++) {
+
+            formElements[i].addEventListener('submit', function (eventArgs) {
+            });
+
+        }
+
+    </script>
+}

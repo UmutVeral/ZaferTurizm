@@ -1,0 +1,52 @@
+﻿@model BusTripDto
+
+<h1>
+    Yeni Otobüs Seferi
+</h1>
+<div class="row">
+    
+    @if(ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @Html.Raw(ViewBag.ErrorMessage)
+        </div>
+    }
+
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+
+        <form method="post" asp-controller="BusTrip" asp-action="Create">
+
+            <div class="mb-2">
+                <label asp-for="RouteId" class="form-label">Rota</label>
+                <select asp-for="RouteId" asp-items="(SelectList)ViewBag.RouteSelectList" class="form-select">
+                    <option>.:: Lütfen Seçiniz ::.</option>
+                </select>
+            </div>
+
+            <div class="mb-2">
+                <label asp-for="VehicleId" class="form-label">Araç</label>
+                <select asp-for="VehicleId" asp-items="(SelectList)ViewBag.VehicleSelectList" class="form-select">
+                    <option>.:: Lütfen Seçiniz ::.</option>
+                </select>
+            </div>
+
+            <div class="mb-2">
+                <label asp-for="Date" class="form-label">Tarih</label>
+                <input type="datetime-local" asp-for="Date" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label asp-for="Price" class="form-label">Fiyatı</label>
+                <input type="number" asp-for="Price" class="form-control" />
+            </div>
+
+            <div class="mb-2 text-end">
+                <button class="btn btn-outline-success">
+                    Kaydet
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>

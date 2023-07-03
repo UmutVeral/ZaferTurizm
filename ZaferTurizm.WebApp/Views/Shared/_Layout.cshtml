@@ -1,0 +1,94 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ZaferTurizm.WebApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ZaferTurizm.WebApp.styles.css" asp-append-version="true" />
+    <style>
+
+        .indexx {
+            background-image: url('https://www.daimlertruck.com/fileadmin/_processed_/3/1/csm_dai-familyshot-buses-20190926_5790c9ba92.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 83vh;
+            width: 1675px;
+        }
+        .marka {
+            background-attachment: fixed;
+            height: 75vh;
+            width: 1415px;
+            
+        }
+        .sefer {
+         
+            height: 75vh;
+            width: 1415px;
+        }
+
+        .navbar {
+            background-color: #4f69c6;
+        }
+.navbar .navbar-nav .nav-link { color: #fff; }
+.navbar .navbar-nav .nav-link:hover { color: #fbc531; }
+.navbar .navbar-nav .active > .nav-link { color: #fbc531;        }
+
+footer a.text-light:hover { color: #fed136!important; text-decoration: none; }
+footer .cizgi { border-right: 1px solid #535e67; }
+    </style>
+</head>
+<body>
+    <header style="padding-top:10px">
+        <!--- Navbar --->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">
+
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBODBdRZyzCbQoH8fQQu_WMxrx0AdMTUZuOf3dyRUR7eEenN1Qfc5DyI6i0Hd1rYM7xiM&usqp=CAU" style="width:120px; border-radius:10px;" alt="Logo">
+                </a>
+                <div class="collapse navbar-collapse" id="nvbCollapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item pl-1">
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link"><i class="fa fa-home fa-fw mr-1"></i>Anasayfa</a>
+                        </li>
+
+                        <li class="nav-item pl-1">
+                            <a class="nav-link" asp-controller="VehicleMake"><i class="fa fa-info-circle fa-fw mr-1"></i>Markalar</a>
+                        </li>
+                        <li class="nav-item pl-1">
+                            <a class="nav-link" asp-controller="VehicleModel"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1"></i>Modeller</a>
+                        </li>
+                        <li class="nav-item pl-1">
+                            <a class="nav-link" asp-controller="VehicleDefinition"><i class="fa fa-user-plus fa-fw mr-1"></i>Araç Tanımları</a>
+                        </li>
+                        <li class="nav-item pl-1">
+                            <a class="nav-link" asp-controller="BusTrip"><i class="fa fa-sign-in fa-fw mr-1"></i>Seferler</a>
+                        </li>
+                        <li class="nav-item pl-1">
+                            <a class="nav-link" asp-controller="Ticket"><i class="fa fa-sign-in fa-fw mr-1"></i>Satılan Bilet İşlemleri</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--# Navbar #-->
+    </header>
+
+    <div class="container" style="margin:0">
+        <main role="main" class="">
+            @RenderBody()
+        </main>
+    </div>
+
+  
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

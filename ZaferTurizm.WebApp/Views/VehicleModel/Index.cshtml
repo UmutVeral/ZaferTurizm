@@ -1,0 +1,126 @@
+﻿@model IEnumerable<VehicleModelSummary>
+
+
+<div class="marka">
+    <h1 class="text-center">Modeller</h1>
+
+    <div class="row">
+        <div class="col-3 col-sm-3 col-md-3">
+
+        </div>
+        <div class="col-6 col-sm-6 col-md-6">
+            <div class="text-end mb-2">
+                <a asp-controller="VehicleModel" asp-action="Create" class="btn btn-primary btn-sm">Yeni ekle</a>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Model Adı</th>
+                        <th>Markası</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var vehicleModel in Model)
+                    {
+                        <tr>
+                            <td>@vehicleModel.Id</td>
+                            <td>@vehicleModel.Name</td>
+                            <td>@vehicleModel.VehicleMakeName</td>
+                            <td>
+                                @* Aşağıdaki a elementi yazım şekline ASP.NET Core'da "Tag helpers" deniyor *@
+                                <a asp-controller="VehicleModel" asp-action="Update" asp-route-id="@vehicleModel.Id">Düzenle</a>
+
+                                @* Aşağıdaki a elementi yazım şekline "HTML helpers" deniyor *@
+                                @* @Html.ActionLink("Düzenle", "Update", "VehicleModel", new { id = vehicleModel.Id }) *@
+
+                                @*
+                                    Yukarıdaki her iki yöntem de en nihayetinde aşağıdaki gibi salt html olarak bir a
+                                    elementi üretecek
+                                *@
+                                @* <a href="/VehicleModel/Update/3">Düzenle</a> *@
+                                <form method="post" asp-controller="VehicleModel" asp-action="Delete" class="d-inline">
+                                    <input type="hidden" name="Id" value="@vehicleModel.Id">
+                                    <button class="btn btn-link">Sil</button>
+                                    @*
+                                        <a href="#" class="btn btn-link delete-button" data-vehicle-model-id="@vehicleModel.Id">Sil</a>*@
+
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-3 col-sm-3 col-md-3">
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @* <script>
+        let deleteButtonsJQ = $('.delete-buttons');
+
+        deleteButtonsJQ.click(function (e) {
+            e.preventDefault();
+            $.ajax({});
+
+            this.dataset.vehicleModelId
+
+            this.style.color = 'red';
+            $(this).css('color', 'red');
+        });
+
+        deleteButtonsJQ.on('click', function (e) {
+            e.preventDefault();
+            $.ajax({});
+        });
+
+    </script> *@
+    @*
+    <script>
+
+        let deleteButtons = document.getElementsByClassName('delete-button');
+
+        for (let i = 0; i < deleteButtons.length; i++) {
+            let deleteButton = deleteButtons[i];
+
+            deleteButton.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                alert(this.dataset.vehicleModelId);
+
+                // $.ajax({});
+
+            });
+
+        }
+
+    </script>
+    *@
+    <script>
+
+        // document. yazdıktan sonra eriştiğimiz Property, Metot ve diğer üyeler DOM framework'ünün
+        // birer üyesidir
+        // DOM -> Document Object Model
+
+        let formElements = document.getElementsByTagName('form');
+
+        for (let i = 0; i < formElements.length; i++) {
+
+            formElements[i].addEventListener('submit', function (eventArgs) {
+
+                let confirmed = confirm("Dikkat!! Bu kayıt silinecek, devam etmek istiyor musunuz?");
+
+                if (!confirmed) {
+                    eventArgs.preventDefault();
+                }
+            });
+
+        }
+
+    </script>
+}

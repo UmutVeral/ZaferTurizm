@@ -1,0 +1,31 @@
+﻿@model VehicleMakeDto
+
+<div class="row">
+    <div class="col-12">
+        <h1>
+            Marka Güncelleme
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+
+        <form method="post" action="/VehicleMake/Update">
+
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <div class="mb-2">
+                <label class="form-label">Marka Adı</label>
+                <input class="form-control border-1 border-secondary" name="Name" value="@Model.Name" />
+            </div>
+
+            <!--
+                ["marka_adi"] = "BMC"
+            -->
+            <div class="mb-2 text-end">
+                <button class="btn btn-outline-primary" type="submit">Kaydet</button>
+            </div>
+        </form>
+
+    </div>
+</div>

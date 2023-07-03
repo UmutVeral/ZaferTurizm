@@ -1,0 +1,68 @@
+﻿@model IEnumerable<BusTripInfo>
+    <div class="sefer">
+
+        <h1 class="text-center">Otobüs Seferleri</h1>
+
+        <div class="row">
+            <div class="col-1 col-sm-1 col-md-1">
+
+            </div>
+            <div class="col-10 col-md-10">
+
+                @if (ViewBag.SuccessMessage != null)
+                {
+                    <div class="alert alert-success" id="success_message">
+                        @ViewBag.SuccessMessage
+                    </div>
+                }
+
+                <div class="text-end mb-2">
+                    <a asp-controller="BusTrip" asp-action="Create" class="btn btn-primary btn-sm">Yeni ekle</a>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Kalkış</th>
+                            <th>Varış</th>
+                            <th>Tarih</th>
+                            <th>Marka</th>
+                            <th>Model</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var busTrip in Model)
+                        {
+                            <tr>
+                                <td>@busTrip.Id</td>
+                                <td>@busTrip.DepartureName</td>
+                                <td>@busTrip.ArrivalName</td>
+                                <td>@busTrip.Date</td>
+                                <td>@busTrip.VehicleMakeName</td>
+                                <td>@busTrip.VehicleModelName</td>
+                                <td>
+                                    <a asp-controller="Ticket" asp-action="TicketsOfBusTrip" asp-route-busTripId="@busTrip.Id">Biletler</a>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-1 col-sm-1 col-md-1">
+
+        </div>
+    </div>
+    @section Scripts{
+
+        <script>let successMessage = $('#success_message');
+
+            if (successMessage.length) {
+                setTimeout(function () {
+                    successMessage.hide();
+                }, 3000);
+            }</script>
+
+    }

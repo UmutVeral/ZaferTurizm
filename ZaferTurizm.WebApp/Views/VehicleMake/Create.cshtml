@@ -1,0 +1,21 @@
+﻿@model VehicleMakeDto
+
+<div class="row">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+
+        <form method="post" action="/VehicleMake/CreateSubmit">
+            <div class="mb-2">
+                <label class="form-label">Marka Adı</label>
+                <input class="form-control border-1 border-secondary" asp-for="Name" />
+            </div>
+
+            <!--
+                ["marka_adi"] = "BMC"
+            -->
+            <div class="mb-2 text-end">
+                <button class="btn btn-outline-primary" type="submit">Kaydet</button>
+            </div>
+        </form>
+
+    </div>
+</div>
